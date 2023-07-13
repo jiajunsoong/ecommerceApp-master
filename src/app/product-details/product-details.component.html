@@ -1,0 +1,16 @@
+<section>
+<img [src]="productDetails?.thumbnail" alt="Thumbnail of {{productDetails?.title}}">
+<ul>
+  <li>{{productDetails?.description}}</li>
+  <li>{{productDetails?.price}}</li>
+  <li>{{productDetails?.discountPercentage}}</li>
+  <li>{{productDetails?.rating}}</li>
+  <li>{{productDetails?.stock}}</li>
+  <li>{{productDetails?.brand}}</li>
+  <li>{{productDetails?.category}}</li>
+  <li>{{productDetails?.images}}</li>
+</ul>
+<div *ngFor="let images of imagesList">
+  <img [src]="images" alt="Product Image">
+</div>
+</section>
