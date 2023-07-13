@@ -16,12 +16,25 @@ export class ProductDetailsComponent implements OnInit{
   productDetails: Products | undefined;
   imagesList: string[] = [];
 
-  constructor(private route: ActivatedRoute,
-    private productService: ProductsService) {}
-  
-    ngOnInit(): void {
-      const productId = Number(this.route.snapshot.params['productId']);
-      this.productDetails = this.productService.getProductById(productId);
-      this.imagesList = this.productService.getAllImageListByProductId(productId);
+  constructor(
+    private route: ActivatedRoute,
+    private productService: ProductsService
+  ) {}
+
+  ngOnInit(): void {
+    const productId = Number(this.route.snapshot.params['productId']);
+    this.productService.getProductById(productId).then(async (product) => {
+      this.productDetails = product;
+      this.imagesList = await this.productService.getAllImageListByProductId(productId);
+    });
   }
+  
+  
+  // ngOnInit(): void {
+  //   const productId = Number(this.route.snapshot.params['productId']);
+  //   this.productService.getProductById(productId).then(product => {
+  //     this.productDetails = product;
+  //     this.imagesList = this.productService.getAllImageListByProductId(productId);
+  //   });
+  // }
 }
