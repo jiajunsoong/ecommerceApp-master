@@ -12,8 +12,16 @@ export class ProductsService {
 
   async getAllProductList(): Promise<Products[]>{
     const data = await fetch(this.URL);
-    return await data.json();
+    const products = await data.json();
+  
+    if (Array.isArray(products)) {
+      return products;
+    } else {
+      // Convert the object to an array
+      return Object.values(products);
+    }
   }
+  
 
   async getProductById(id: number): Promise<Products| undefined>{
     const data = await fetch(`${this.URL}/${id}`);
