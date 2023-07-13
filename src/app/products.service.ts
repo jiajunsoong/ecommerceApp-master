@@ -20,15 +20,6 @@ export class ProductsService {
     return await data.json();
   }
 
-  // async getProductById(id: number): <Products| undefined>{
-  //   const data = await fetch(`${this.URL}/${id}`);
-  //   return await data.json();
-  // }
-
-  // getProductById(id: number): Products| undefined{
-  //   return this.productList.find(product => product.id === id);
-  // }
-
   async getAllImageListByProductId(id: number): Promise<string[]> {
     const product = await this.getProductById(id);
   

@@ -28,13 +28,5 @@ export class ProductDetailsComponent implements OnInit{
       this.imagesList = await this.productService.getAllImageListByProductId(productId);
     });
   }
-  
-  
-  // ngOnInit(): void {
-  //   const productId = Number(this.route.snapshot.params['productId']);
-  //   this.productService.getProductById(productId).then(product => {
-  //     this.productDetails = product;
-  //     this.imagesList = this.productService.getAllImageListByProductId(productId);
-  //   });
-  // }
+
 }
