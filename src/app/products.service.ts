@@ -1,41 +1,29 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Products } from './products';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductsService {
-  
-  URL = 'http://localhost:3000/products'
 
-  constructor() { }
+  URL = 'https://dummyjson.com/products';
 
-  async getAllProductList(): Promise<Products[]>{
-    const data = await fetch(this.URL);
-    const products = await data.json();
-  
-    if (Array.isArray(products)) {
-      return products;
-    } else {
-      // Convert the object to an array
-      return Object.values(products);
-    }
-  }
-  
+  constructor(private http: HttpClient) { }
 
-  async getProductById(id: number): Promise<Products| undefined>{
-    const data = await fetch(`${this.URL}/${id}`);
-    return await data.json();
+  getAllProductList(): Observable<Products[]> {
+    return this.http.get<Products[]>(this.URL);
   }
 
-  async getAllImageListByProductId(id: number): Promise<string[]> {
-    const product = await this.getProductById(id);
-  
-    if (product) {
-      return product.images;
-    }
-  
-    return [];
+  getProductById(id: number): Observable<Products | undefined> {
+    return this.http.get<Products>(`${this.URL}/${id}`);
   }
-  
+
+  getAllImageListByProductId(id: number): Observable<string[]> {
+    return this.getProductById(id).pipe(
+      map((product: Products | undefined) => product ? product.images : [])
+    );
+  }
 }
